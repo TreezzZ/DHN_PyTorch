@@ -40,24 +40,25 @@ def run():
 
     # Training
     #for code_length in [16, 32, 48, 128]:
-    #    args.code_length  = code_length
-    for lamda in [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1, 2, 5, 10, 20, 100]:
-        args.lamda = lamda
-        checkpoint = dhn.train(
-            train_dataloader,
-            query_dataloader,
-            retrieval_dataloader,
-            args.arch,
-            args.code_length,
-            args.device,
-            args.lr,
-            args.max_iter,
-            args.lamda,
-            args.topk,
-            args.evaluate_interval,
-        )
-        #logger.info('[code_length:{}][map:{:.4f}]'.format(args.code_length, checkpoint['map']))
-        logger.info('[lamda:{}][map:{:.4f}]'.format(args.lamda, checkpoint['map']))
+    for code_length in [16]:
+        args.code_length  = code_length
+        for lamda in [1e-3, 1e-2, 1e-1, 1, 2, 5]:
+            args.lamda = lamda
+            checkpoint = dhn.train(
+                train_dataloader,
+                query_dataloader,
+                retrieval_dataloader,
+                args.arch,
+                args.code_length,
+                args.device,
+                args.lr,
+                args.max_iter,
+                args.lamda,
+                args.topk,
+                args.evaluate_interval,
+            )
+            #logger.info('[code_length:{}][map:{:.4f}]'.format(args.code_length, checkpoint['map']))
+            logger.info('[lamda:{}][map:{:.4f}]'.format(args.lamda, checkpoint['map']))
 
         # Save checkpoint
         #torch.save(
