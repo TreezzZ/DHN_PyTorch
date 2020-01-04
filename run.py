@@ -39,9 +39,11 @@ def run():
     )
 
     # Training
-    for code_length in [16, 32, 48, 128]:
-        args.code_length  = code_length
-        checkpoint = hashnet.train(
+    #for code_length in [16, 32, 48, 128]:
+    #    args.code_length  = code_length
+    for lamda in [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1, 2, 5, 10, 20, 100]:
+        args.lamda = lamda
+        checkpoint = dhn.train(
             train_dataloader,
             query_dataloader,
             retrieval_dataloader,
@@ -54,19 +56,20 @@ def run():
             args.topk,
             args.evaluate_interval,
         )
-        logger.info('[code_length:{}][map:{:.4f}]'.format(args.code_length, checkpoint['map']))
+        #logger.info('[code_length:{}][map:{:.4f}]'.format(args.code_length, checkpoint['map']))
+        logger.info('[lamda:{}][map:{:.4f}]'.format(args.lamda, checkpoint['map']))
 
         # Save checkpoint
-        torch.save(
-            checkpoint, 
-            os.path.join('checkpoints', '{}_model_{}_code_{}_lamda_{}_map_{:.4f}.pt'.format(
-                args.dataset, 
-                args.arch, 
-                args.code_length, 
-                args.lamda, 
-                checkpoint['map']),
-            )
-        )
+        #torch.save(
+        #    checkpoint, 
+        #    os.path.join('checkpoints', '{}_model_{}_code_{}_lamda_{}_map_{:.4f}.pt'.format(
+        #        args.dataset, 
+        #        args.arch, 
+        #        args.code_length, 
+        #        args.lamda, 
+        #        checkpoint['map']),
+        #    )
+        #)
 
 
 def load_config():

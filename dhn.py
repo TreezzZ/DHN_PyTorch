@@ -164,7 +164,7 @@ class DHNLoss(nn.Module):
     DHN loss function.
     """
     def __init__(self, lamda):
-        super(HashNetLoss, self).__init__()
+        super(DHNLoss, self).__init__()
         self.lamda = lamda
 
     def forward(self, H, S):
