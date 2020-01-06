@@ -39,38 +39,34 @@ def run():
     )
 
     # Training
-    #for code_length in [16, 32, 48, 128]:
-    for code_length in [16]:
+    for code_length in [16, 32, 48, 128]:
         args.code_length  = code_length
-        for lr in [1e-5, 5e-5, 1e-4, 3e-4, 1e-3]:
-            args.lr = lr
-            checkpoint = dhn.train(
-                train_dataloader,
-                query_dataloader,
-                retrieval_dataloader,
-                args.arch,
-                args.code_length,
-                args.device,
-                args.lr,
-                args.max_iter,
-                args.lamda,
-                args.topk,
-                args.evaluate_interval,
-            )
-            logger.info('[lr:{}][map:{:.4f}]'.format(lr, checkpoint['map']))
-        #logger.info('[code_length:{}][map:{:.4f}]'.format(args.code_length, checkpoint['map']))
+        checkpoint = dhn.train(
+            train_dataloader,
+            query_dataloader,
+            retrieval_dataloader,
+            args.arch,
+            args.code_length,
+            args.device,
+            args.lr,
+            args.max_iter,
+            args.lamda,
+            args.topk,
+            args.evaluate_interval,
+        )
+        logger.info('[code_length:{}][map:{:.4f}]'.format(args.code_length, checkpoint['map']))
 
         # Save checkpoint
-        #torch.save(
-        #    checkpoint, 
-        #    os.path.join('checkpoints', '{}_model_{}_code_{}_lamda_{}_map_{:.4f}.pt'.format(
-        #        args.dataset, 
-        #        args.arch, 
-        #        args.code_length, 
-        #        args.lamda, 
-        #        checkpoint['map']),
-        #    )
-        #)
+        torch.save(
+            checkpoint, 
+            os.path.join('checkpoints', '{}_model_{}_code_{}_lamda_{}_map_{:.4f}.pt'.format(
+                args.dataset, 
+                args.arch, 
+                args.code_length, 
+                args.lamda, 
+                checkpoint['map']),
+            )
+        )
 
 
 def load_config():
@@ -92,8 +88,8 @@ def load_config():
                         help='Binary hash code length.')
     parser.add_argument('--arch', default='alexnet', type=str,
                         help='CNN model name.(default: alexnet)')
-    parser.add_argument('--batch-size', default=64, type=int,
-                        help='Batch size.(default: 64)')
+    parser.add_argument('--batch-size', default=256, type=int,
+                        help='Batch size.(default: 256)')
     parser.add_argument('--lr', default=1e-5, type=float,
                         help='Learning rate.(default: 1e-5)')
     parser.add_argument('--max-iter', default=100, type=int,
@@ -104,8 +100,8 @@ def load_config():
                         help='Calculate map of top k.(default: all)')
     parser.add_argument('--gpu', default=None, type=int,
                         help='Using gpu.(default: False)')
-    parser.add_argument('--lamda', default=0.01, type=float,
-                        help='Hyper-parameter.(default: 0.01)')
+    parser.add_argument('--lamda', default=1, type=float,
+                        help='Hyper-parameter.(default: 1)')
     parser.add_argument('--seed', default=3367, type=int,
                         help='Random seed.(default: 3367)')
     parser.add_argument('--evaluate-interval', default=10, type=int,

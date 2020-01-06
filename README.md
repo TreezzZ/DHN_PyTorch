@@ -1,4 +1,4 @@
-# HashNet: Deep Learning to Hash by Continuation
+# Deep Hashing Network for Efficient Similarity Retrieval
 
 ## REQUIREMENTS
 `pip install -r requirements.txt`
@@ -17,10 +17,10 @@ usage: run.py [-h] [--dataset DATASET] [--root ROOT]
               [--code-length CODE_LENGTH] [--arch ARCH]
               [--batch-size BATCH_SIZE] [--lr LR] [--max-iter MAX_ITER]
               [--num-workers NUM_WORKERS] [--topk TOPK] [--gpu GPU]
-              [--alpha ALPHA] [--seed SEED]
+              [--lamda LAMDA] [--seed SEED]
               [--evaluate-interval EVALUATE_INTERVAL]
 
-HashNet_PyTorch
+DHN_PyTorch
 
 optional arguments:
   -h, --help            show this help message and exit
@@ -37,7 +37,7 @@ optional arguments:
                         Number of loading data threads.(default: 6)
   --topk TOPK           Calculate map of top k.(default: all)
   --gpu GPU             Using gpu.(default: False)
-  --alpha ALPHA         Hyper-parameter.(default: 1)
+  --lamda LAMDA         Hyper-parameter.(default: 1)
   --seed SEED           Random seed.(default: 3367)
   --evaluate-interval EVALUATE_INTERVAL
                         Evaluation interval.(default: 10)
@@ -54,7 +54,7 @@ imagenet100: Top 100 classes, 5000 query images, 10000 training images, MAP@1000
 
  bits | 16 | 32 | 48 | 128
    :-:   |  :-:    |   :-:   |   :-:   |   :-:   
-cifar10@ALL | 
-nus-wide-tc21@5000 | 
-imagenet100@1000 | 
+cifar10@ALL | 0.6398 | 0.6752 | 0.6813 | 0.6878
+nus-wide-tc21@5000 | 0.8194 | 0.8326 | 0.8396 | 0.8443
+imagenet100@1000 | 0.2659 | 0.3703 | 0.4122 | 0.4743
 
